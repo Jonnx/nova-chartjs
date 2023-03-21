@@ -46,6 +46,7 @@ class TotalRecordsController extends Controller
             } elseif (array_key_exists('avg', $options)) {
                 $calculation = 'AVG';
                 $calculationField = $options['avg'] ?: 1;
+                dd($calculation, $calculationField);
             }
         }
 
