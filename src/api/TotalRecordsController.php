@@ -87,10 +87,10 @@ class TotalRecordsController extends Controller
             if ($unitOfMeasurement == 'day') {
                 if (isset($request->join)) {
                     $joinInformation = json_decode($request->join, true);
-                    $query = $model::selectRaw('DATE(' . $xAxisColumn . ') AS cat, DATE(' . $xAxisColumn . ') AS catorder, ". $calculation. "(' . $calculationField . ') counted' . $seriesSql)
+                    $query = $model::selectRaw('DATE(' . $xAxisColumn . ') AS cat, DATE(' . $xAxisColumn . ') AS catorder, ' . $calculation . '(' . $calculationField . ') counted' . $seriesSql)
                         ->join($joinInformation['joinTable'], $joinInformation['joinColumnFirst'], $joinInformation['joinEqual'], $joinInformation['joinColumnSecond']);
                 } else {
-                    $query = $model::selectRaw('DATE(' . $xAxisColumn . ') AS cat, DATE(' . $xAxisColumn . ') AS catorder, ". $calculation. "(' . $calculationField . ') counted' . $seriesSql);
+                    $query = $model::selectRaw('DATE(' . $xAxisColumn . ') AS cat, DATE(' . $xAxisColumn . ') AS catorder, ' . $calculation . '(' . $calculationField . ') counted' . $seriesSql);
                 }
 
                 if (is_numeric($advanceFilterSelected)) {
@@ -113,14 +113,14 @@ class TotalRecordsController extends Controller
                         $query = $model::selectRaw("to_char(DATE_TRUNC('week', " . $xAxisColumn . "), 'YYYYWW') AS cat, to_char(DATE_TRUNC('week', " . $xAxisColumn . "), 'YYYYWW') AS catorder, " . $calculation . "(" . $calculationField . ") counted" . $seriesSql)
                             ->join($joinInformation['joinTable'], $joinInformation['joinColumnFirst'], $joinInformation['joinEqual'], $joinInformation['joinColumnSecond']);
                     } else {
-                        $query = $model::selectRaw('YEARWEEK(' . $xAxisColumn . ', ' . $startWeek . ') AS cat, YEARWEEK(' . $xAxisColumn . ', ' . $startWeek . ') AS catorder, ". $calculation. "(' . $calculationField . ') counted' . $seriesSql)
+                        $query = $model::selectRaw('YEARWEEK(' . $xAxisColumn . ', ' . $startWeek . ') AS cat, YEARWEEK(' . $xAxisColumn . ', ' . $startWeek . ') AS catorder, ' . $calculation . '(' . $calculationField . ') counted' . $seriesSql)
                             ->join($joinInformation['joinTable'], $joinInformation['joinColumnFirst'], $joinInformation['joinEqual'], $joinInformation['joinColumnSecond']);
                     }
                 } else {
                     if ($connectionName == 'pgsql') {
                         $query = $model::selectRaw("to_char(DATE_TRUNC('week', " . $xAxisColumn . "), 'YYYYWW') AS cat, to_char(DATE_TRUNC('week', " . $xAxisColumn . "), 'YYYYWW') AS catorder, " . $calculation . "(" . $calculationField . ") counted" . $seriesSql);
                     } else {
-                        $query = $model::selectRaw('YEARWEEK(' . $xAxisColumn . ', ' . $startWeek . ') AS cat, YEARWEEK(' . $xAxisColumn . ', ' . $startWeek . ') AS catorder, ". $calculation. "(' . $calculationField . ') counted' . $seriesSql);
+                        $query = $model::selectRaw('YEARWEEK(' . $xAxisColumn . ', ' . $startWeek . ') AS cat, YEARWEEK(' . $xAxisColumn . ', ' . $startWeek . ') AS catorder, ' . $calculation . '(' . $calculationField . ') counted' . $seriesSql);
                     }
                 }
 
@@ -140,10 +140,10 @@ class TotalRecordsController extends Controller
             } else if ($unitOfMeasurement == 'hour') {
                 if (isset($request->join)) {
                     $joinInformation = json_decode($request->join, true);
-                    $query = $model::selectRaw('HOUR(' . $xAxisColumn . ') AS cat, HOUR(' . $xAxisColumn . ') AS catorder, ". $calculation. "(' . $calculationField . ') counted' . $seriesSql)
+                    $query = $model::selectRaw('HOUR(' . $xAxisColumn . ') AS cat, HOUR(' . $xAxisColumn . ') AS catorder, ' . $calculation . '(' . $calculationField . ') counted' . $seriesSql)
                         ->join($joinInformation['joinTable'], $joinInformation['joinColumnFirst'], $joinInformation['joinEqual'], $joinInformation['joinColumnSecond']);
                 } else {
-                    $query = $model::selectRaw('HOUR(' . $xAxisColumn . ') AS cat, HOUR(' . $xAxisColumn . ') AS catorder, ". $calculation. "(' . $calculationField . ') counted' . $seriesSql);
+                    $query = $model::selectRaw('HOUR(' . $xAxisColumn . ') AS cat, HOUR(' . $xAxisColumn . ') AS catorder, ' . $calculation . '(' . $calculationField . ') counted' . $seriesSql);
                 }
 
                 if (is_numeric($advanceFilterSelected)) {
@@ -166,14 +166,14 @@ class TotalRecordsController extends Controller
                         $query = $model::selectRaw("to_char(" . $xAxisColumn . ", 'Mon YYYY') AS cat, to_char(" . $xAxisColumn . ", 'YYYY-MM') AS catorder, " . $calculation . "(" . $calculationField . ") counted" . $seriesSql)
                             ->join($joinInformation['joinTable'], $joinInformation['joinColumnFirst'], $joinInformation['joinEqual'], $joinInformation['joinColumnSecond']);
                     } else {
-                        $query = $model::selectRaw('DATE_FORMAT(' . $xAxisColumn . ', "%b %Y") AS cat, DATE_FORMAT(' . $xAxisColumn . ', "%Y-%m") AS catorder, ". $calculation. "(' . $calculationField . ') counted' . $seriesSql)
+                        $query = $model::selectRaw('DATE_FORMAT(' . $xAxisColumn . ', "%b %Y") AS cat, DATE_FORMAT(' . $xAxisColumn . ', "%Y-%m") AS catorder, ' . $calculation . '(' . $calculationField . ') counted' . $seriesSql)
                             ->join($joinInformation['joinTable'], $joinInformation['joinColumnFirst'], $joinInformation['joinEqual'], $joinInformation['joinColumnSecond']);
                     }
                 } else {
                     if ($connectionName == 'pgsql') {
                         $query = $model::selectRaw("to_char(" . $xAxisColumn . ", 'Mon YYYY') AS cat, to_char(" . $xAxisColumn . ", 'YYYY-MM') AS catorder, " . $calculation . "(" . $calculationField . ") counted" . $seriesSql);
                     } else {
-                        $query = $model::selectRaw('DATE_FORMAT(' . $xAxisColumn . ', "%b %Y") AS cat, DATE_FORMAT(' . $xAxisColumn . ', "%Y-%m") AS catorder, ". $calculation. "(' . $calculationField . ') counted' . $seriesSql);
+                        $query = $model::selectRaw('DATE_FORMAT(' . $xAxisColumn . ', "%b %Y") AS cat, DATE_FORMAT(' . $xAxisColumn . ', "%Y-%m") AS catorder, ' . $calculation . '(' . $calculationField . ') counted' . $seriesSql);
                     }
                 }
 
