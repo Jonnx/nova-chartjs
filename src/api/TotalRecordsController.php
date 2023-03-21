@@ -38,6 +38,7 @@ class TotalRecordsController extends Controller
         // defaults to sum
         $calculation = 'SUM';
         $calculationField = 1;
+        $calculationNullValue = '0';
         if (isset($request->options)) {
             $options = json_decode($request->options, true);
             if (array_key_exists('sum', $options)) {
