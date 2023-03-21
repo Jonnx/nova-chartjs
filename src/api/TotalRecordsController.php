@@ -43,10 +43,11 @@ class TotalRecordsController extends Controller
             if (array_key_exists('sum', $options)) {
                 $calculation = 'SUM';
                 $calculationField = $options['sum'] ?: 1;
+                $calculationNullValue = '0';
             } elseif (array_key_exists('avg', $options)) {
                 $calculation = 'AVG';
                 $calculationField = $options['avg'] ?: 1;
-                dd($calculation, $calculationField);
+                $calculationNullValue = 'NULL';
             }
         }
 
@@ -71,7 +72,7 @@ class TotalRecordsController extends Controller
                     $filter = $seriesData->filter;
                     $labelList[$seriesKey] = $seriesData->label;
                     if (empty($filter->value) && isset($filter->operator) && ($filter->operator == 'IS NULL' || $filter->operator == 'IS NOT NULL')) {
-                        $seriesSql .= ", " . $calculation . "(CASE WHEN " . $filter->key . " " . $filter->operator . " then " . $calculationField . " else 0 end) as \"" . $labelList[$seriesKey] . "\"";
+                        $seriesSql .= ", " . $calculation . "(CASE WHEN " . $filter->key . " " . $filter->operator . " then " . $calculationField . " else " . $calculationNullValue . " end) as \"" . $labelList[$seriesKey] . "\"";
                     } else if (empty($filter->value)) {
                         $seriesSql .= ", " . $calculation . "(CASE WHEN ";
                         $countFilter = count($filter);
@@ -79,9 +80,9 @@ class TotalRecordsController extends Controller
                             $seriesSql .= " " . $listFilter->key . " " . ($listFilter->operator ?? "=") . " '" . $listFilter->value . "' ";
                             $seriesSql .= $countFilter - 1 != $keyFilter ? " AND " : "";
                         }
-                        $seriesSql .= "then " . $calculationField . " else 0 end) as \"" . $labelList[$seriesKey] . "\"";
+                        $seriesSql .= "then " . $calculationField . " else " . $calculationNullValue . " end) as \"" . $labelList[$seriesKey] . "\"";
                     } else {
-                        $seriesSql .= ", " . $calculation . "(CASE WHEN " . $filter->key . " " . ($filter->operator ?? "=") . " '" . $filter->value . "' then " . $calculationField . " else 0 end) as \"" . $labelList[$seriesKey] . "\"";
+                        $seriesSql .= ", " . $calculation . "(CASE WHEN " . $filter->key . " " . ($filter->operator ?? "=") . " '" . $filter->value . "' then " . $calculationField . " else " . $calculationNullValue . " end) as \"" . $labelList[$seriesKey] . "\"";
                     }
                 }
             }
