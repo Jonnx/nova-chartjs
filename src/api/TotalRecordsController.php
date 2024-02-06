@@ -45,7 +45,7 @@ class TotalRecordsController extends Controller
         $calculationField = 1;
         $calculationNullValue = '0';
         if (isset($request->options)) {
-            $options = json_decode($request->options, true);
+            $options = $request->options;
             if (array_key_exists('sum', $options)) {
                 $calculation = 'SUM';
                 $calculationField = $options['sum'] ?: 1;
